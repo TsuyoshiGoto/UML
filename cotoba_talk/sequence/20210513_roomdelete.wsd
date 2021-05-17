@@ -1,0 +1,17 @@
+@startuml
+
+title COTOBA Talk create room delete
+
+Android -> Appsync:subscribeRoomUpdate
+Android -> Android:ルーム削除
+Android -> Appsync:muteteRoomDelete(RoomName)
+Appsync -> DB:RoomName更新
+DB -> lambda
+lambda -> slack:Room削除
+lambda <-- slack:OK/NG
+lambda -> DB:slackRoomId削除
+DB -> Appsync:ルーム情報リスト
+Appsync --> Android:RoomUpdateCallback
+Android -> Android:ルーム情報更新、削除実施時はRoomsに画面遷移
+
+@enduml

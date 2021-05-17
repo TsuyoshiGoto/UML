@@ -1,0 +1,21 @@
+@startuml{Fig10.1.png}
+title create room state diagram
+
+' [*] が開始状態 or 終了状態を表す
+' [*] が含まれているとPlantUMLが状態マシン図と判断する
+[*] --> Start
+
+Start --> SameExist : Channel with\nthe given name exists
+Start --> NoSame : No Channel\nwith the name
+
+NoSame --> Success : Create the channel
+
+SameExist --> SameArchived : Archived
+SameExist --> Failed : Not archived
+
+SameArchived --> NoMessage : No message
+SameArchived --> Failed : there are messages
+
+NoMessage --> Success : Unarchive the channel
+
+@enduml

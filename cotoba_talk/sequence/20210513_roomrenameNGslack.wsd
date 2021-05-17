@@ -1,0 +1,17 @@
+@startuml
+
+title COTOBA Talk rename room ng from slack
+
+Android -> Appsync:subscribeRoomUpdate
+Android -> Android:ルーム名変更
+Android -> Appsync:muteteRoomRename(RoomName)
+Appsync -> DB:RoomName更新
+DB -> lambda
+lambda -> slack:Room名変更
+lambda <-- slack:失敗
+lambda -> DB:Room名削除
+DB -> Appsync:ルーム情報リスト
+Appsync --> Android:RoomUpdateCallback
+Android -> Android:名前変更後のルームが\n削除されているので、\nルーム名変更NG表示
+
+@enduml
