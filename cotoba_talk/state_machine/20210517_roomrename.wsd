@@ -8,7 +8,7 @@ title create room state diagram
 Start --> SameExist : Channel with\nthe given name exists
 Start --> NoSame : No Channel\nwith the name
 
-NoSame --> Success : Create the channel
+NoSame --> Success : Rename the new channel
 
 SameExist --> SameArchived : Archived
 SameExist --> Failed : Not archived
@@ -16,6 +16,6 @@ SameExist --> Failed : Not archived
 SameArchived --> NoMessage : No message
 SameArchived --> Failed : there are messages
 
-NoMessage --> Success : Unarchive the channel
+NoMessage --> Success : Unarchive and rename the old channel.\nRename the new channel.
 
 @enduml
