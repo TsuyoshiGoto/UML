@@ -1,0 +1,17 @@
+@startuml
+
+title COTOBA Talk rename room
+
+Android -> Appsync:subscribeRoomUpdate
+Android -> Android:ルーム名変更
+Android -> Appsync:muteteRoomRename(RoomName)
+Appsync -> lambda:ルーム名変更
+lambda -> slack:チャンネル名変更
+slack -> lambda:OK
+lambda -> DB:ルーム名変更
+DB -> lambda:OK
+lambda -> Appsync:OK
+Appsync --> Android:RoomUpdateCallback
+Android -> Android:ルーム情報更新、名前変更時はRoomに画面遷移
+
+@enduml

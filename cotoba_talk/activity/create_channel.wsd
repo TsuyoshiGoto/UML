@@ -1,0 +1,42 @@
+@startuml
+
+start
+:チャンネル作成;
+if (チャンネル作成成功？) then (yes)
+  #palegreen:success;
+  kill
+else (no)
+  if (同名チャンネルが存在？) then (no)
+    #pink:error;
+    kill
+  else (yes)
+    :チャンネル一覧取得;
+    :チャンネル一覧から対象チャンネル情報を取得;
+    if (チャンネルの取得成功？) then (no)
+      #pink:error;
+      kill
+    else (yes)
+      if (対象チャンネルがアーカイブ済？) then (no)
+        #pink:error;
+        kill
+      else (yes)
+        :対象チャンネルのメッセージログを、\nメッセージ数の上限を１個とし、取得;
+        if (対象チャンネルのメッセージログが空？) then (no)
+          #pink:error;
+          kill
+        else (yes)
+          :対象チャンネルをアンアーカイブ;
+          if (アンアーカイブ成功？) then (yes)
+            #palegreen:success;
+            kill
+          else (no)
+            #pink:error;
+            kill
+          endif
+        endif
+      endif
+    endif
+  endif
+endif
+
+@enduml

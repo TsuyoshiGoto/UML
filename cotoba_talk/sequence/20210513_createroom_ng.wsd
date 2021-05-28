@@ -1,0 +1,15 @@
+@startuml
+
+title COTOBA Talk create room ng from slack
+
+Android -> Appsync:subscribeRoomUpdate
+Android -> Android:ルーム作成
+Android -> Appsync:muteteRoomCreate(RoomName)
+Appsync -> lambda:ルーム作成
+lambda -> slack:チャンネル作成
+slack -> lambda:NG
+lambda -> Appsync:NG
+Appsync --> Android:RoomUpdateCallback
+Android -> Android:作成したルームが\n削除されているので、\nルーム作成NG表示
+
+@enduml

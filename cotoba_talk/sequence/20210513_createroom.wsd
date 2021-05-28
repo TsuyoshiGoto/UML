@@ -1,0 +1,17 @@
+@startuml
+
+title COTOBA Talk create room
+
+Android -> Appsync:subscribeRoomUpdate
+Android -> Android:ルーム作成
+Android -> Appsync:muteteRoomCreate(RoomName)
+Appsync -> lambda:ルーム作成
+lambda -> slack:チャンネル作成
+slack -> lambda:OK、チャンネルID
+lambda -> DB:ルーム作成、チャンネルID登録
+DB -> lambda:OK
+lambda -> Appsync:OK
+Appsync --> Android:RoomUpdateCallback
+Android -> Android:ルーム情報更新、作成時はRoomに画面遷移
+
+@enduml
