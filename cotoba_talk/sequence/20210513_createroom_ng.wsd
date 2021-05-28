@@ -10,6 +10,6 @@ lambda -> slack:チャンネル作成
 slack -> lambda:NG
 lambda -> Appsync:NG
 Appsync --> Android:RoomUpdateCallback
-Android -> Android:作成したルームが\n削除されているので、\nルーム作成NG表示
+Android -> Android:ルーム作成失敗メッセージを表示
 
 @enduml

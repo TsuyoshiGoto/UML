@@ -10,6 +10,6 @@ lambda -> slack:チャンネル削除
 slack -> lambda:NG
 lambda -> Appsync:NG
 Appsync --> Android:RoomUpdateCallback
-Android -> Android:ルーム情報更新、削除実施時はRoomsに画面遷移
+Android -> Android:ルーム削除失敗メッセージを表示
 
 @enduml

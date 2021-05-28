@@ -8,7 +8,7 @@ Android -> Appsync:muteteRoomCreate(RoomName)
 Appsync -> lambda:ルーム作成
 lambda -> slack:チャンネル作成
 slack -> lambda:OK、チャンネルID
-lambda -> DB:ルーム作成、チャンネルID登録
+lambda -> DB:ルーム追加
 DB -> lambda:OK
 lambda -> Appsync:OK
 Appsync --> Android:RoomUpdateCallback

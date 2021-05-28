@@ -10,6 +10,6 @@ lambda -> slack:チャンル名変更
 slack -> lambda:NG
 lambda -> Appsync:NG
 Appsync --> Android:RoomUpdateCallback
-Android -> Android:名前変更後のルームが\n削除されているので、\nルーム名変更NG表示
+Android -> Android:ルーム名変更失敗メッセージを表示
 
 @enduml
