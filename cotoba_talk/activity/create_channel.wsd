@@ -1,34 +1,32 @@
 @startuml
 
+title COTOBA Talk create slack channel
+
 start
 :チャンネル作成;
 if (チャンネル作成成功？) then (yes)
-  #palegreen:success;
-  kill
 else (no)
-  if (同名チャンネルが存在？) then (no)
+  if (作成するチャンネルと同名チャンネル\n（以下同名チャンネル）が存在？) then (no)
     #pink:error;
     kill
   else (yes)
     :チャンネル一覧取得;
-    :チャンネル一覧から対象チャンネル情報を取得;
-    if (チャンネルの取得成功？) then (no)
+    :チャンネル一覧から同名チャンネル情報を取得;
+    if (取得成功？) then (no)
       #pink:error;
       kill
     else (yes)
-      if (対象チャンネルがアーカイブ済？) then (no)
+      if (同名チャンネルがアーカイブ済？) then (no)
         #pink:error;
         kill
       else (yes)
-        :対象チャンネルのメッセージログを、\nメッセージ数の上限を１個とし、取得;
-        if (対象チャンネルのメッセージログが空？) then (no)
+        :同名チャンネルのメッセージログを、\nメッセージ数の上限を１個とし、取得;
+        if (同名チャンネルのメッセージログが空？) then (no)
           #pink:error;
           kill
         else (yes)
-          :対象チャンネルをアンアーカイブ;
+          :同名チャンネルをアンアーカイブ;
           if (アンアーカイブ成功？) then (yes)
-            #palegreen:success;
-            kill
           else (no)
             #pink:error;
             kill
@@ -36,6 +34,20 @@ else (no)
         endif
       endif
     endif
+  endif
+endif
+:ボットのチャンネル参加;
+if (チャンネル参加成功？) then (yes)
+  #palegreen:success;
+  kill
+else (no)
+  :作成したチャンネルを削除;
+  if (削除成功) then (no)
+    #pink:error\n作成されたチャンネルが残る;
+    kill
+  else (yes)
+    #pink:error;
+    kill
   endif
 endif
 
