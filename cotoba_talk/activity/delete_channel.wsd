@@ -1,0 +1,32 @@
+@startuml
+
+title COTOBA Talk archive slack channel
+
+start
+:対象チャンネルをアーカイブ;
+if (アーカイブ成功？) then (no)
+  #pink:error;
+  kill
+else (yes)
+  :対象チャンネルのメッセージログを100個分取得;
+  while (ログ取得成功？) is (yes)
+    if (メッセージ数が0) then (yes)
+      #palegreen:success;
+      kill
+    else (no)
+      :メッセージの削除;
+      if (削除成功？) then (no)
+        :対象チャンネルを\nアンアーカイブ;
+        #pink:error;
+        kill
+      else (yes)
+        :メッセージログを\n100個分取得;
+      endif
+    endif
+  endwhile (no)
+  :対象チャンネルをアンアーカイブ;
+  #pink:error;
+  kill
+endif
+
+@enduml

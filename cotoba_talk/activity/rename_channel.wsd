@@ -1,0 +1,66 @@
+@startuml
+
+title COTOBA Talk rename slack channel
+
+start
+:対象チャンネルをリネーム;
+if (リネーム成功？) then (yes)
+  #palegreen:success;
+  kill
+else (no)
+  if (リネーム先の名前と同名のチャンネル\n（以下、同名チャンネル）が存在？) then (no)
+    #pink:error;
+    kill
+  else (yes)
+    :チャンネル一覧取得;
+    :チャンネル一覧から\n同名チャンネル情報を取得;
+    if (取得成功？) then (no)
+      #pink:error;
+      kill
+    else (yes)
+      if (同名チャンネルがアーカイブ済？) then (no)
+        #pink:error;
+        kill
+      else (yes)
+        :同名チャンネルのメッセージログを、\nメッセージ数の上限を１個とし、取得;
+        if (同名チャンネルのメッセージログが空？) then (no)
+          #pink:error;
+          kill
+        else (yes)
+          :対象チャンネルIDからリネーム前の名前を取得;
+          if (取得成功？) then (no)
+            #pink:error;
+            kill
+          else (yes)
+            :同名チャンネルをランダムな名前にリネーム;
+            while (同名チャンネルのリネーム成功？) is (no)
+              if (リネームの失敗が5回目) then (yes)
+                #pink:error;
+                kill
+              else (no)
+                :同名チャンネルをランダムな名前にリネーム;
+              endif
+            endwhile (yes)
+            :対象チャンネルをリネーム;
+            if (リネーム成功？) then (no)
+              :同名チャンネルをランダムな名前から\n同名チャンネルのリネーム前の名前にリネーム;
+              #pink:error;
+              kill
+            else (yes)
+              :同名チャンネルをランダムな名前から\n対象チャンネルのリネーム前の名前にリネーム;
+              if (リネーム成功？) then (no)
+                #palegreen:success\n対象チャンネルのリネームは成功\n同名チャンネルはランダム名のまま;
+                kill
+              else (yes)
+                #palegreen:success;
+                kill
+              endif
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
+endif
+
+@enduml
